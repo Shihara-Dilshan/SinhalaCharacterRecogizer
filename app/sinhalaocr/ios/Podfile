@@ -14,6 +14,8 @@ target 'sinhalaocr' do
 
   pod 'RNSketchCanvas', :path => '../node_modules/@terrylinla/react-native-sketch-canvas'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'sinhalaocrTests' do
     inherit! :complete
     # Pods for testing

@@ -3,25 +3,7 @@ import {Button, View, LogBox} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen';
-
-// function HomeScreen({ navigation }) {
-//   return (
-//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       <Button
-//         onPress={() => navigation.navigate('Notifications')}
-//         title="Go to notifications"
-//       />
-//     </View>
-//   );
-// }
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
+import NotificationsScreen from './screens/NotificationsScreen';
 
 const Drawer = createDrawerNavigator();
 LogBox.ignoreLogs(['Warnings: ...']);
