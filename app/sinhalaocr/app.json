@@ -1,4 +1,5 @@
 {
   "name": "sinhalaocr",
-  "displayName": "sinhalaocr"
+  "displayName": "sinhalaocr",
+  "orientation": "default"
 }
