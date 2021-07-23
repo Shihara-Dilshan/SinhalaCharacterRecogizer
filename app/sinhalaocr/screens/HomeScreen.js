@@ -13,6 +13,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
 import axios from 'axios';
+import AwesomeAlert from 'react-native-awesome-alerts';
  
 import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
  
@@ -21,9 +22,23 @@ export default class HomeScreen extends Component {
     super(props);
     this.state = {
        navigation : props.navigation,
-       isLoading: false
+       isLoading: false,
+       showAlert: false,
+       predicted: ''
     };
   }
+
+  showAlert = () => {
+    this.setState({
+      showAlert: true
+    });
+  };
+
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    });
+  };
 
   upload = () => {
     this.setState({isLoading: true});
@@ -50,7 +65,10 @@ export default class HomeScreen extends Component {
           })
           .then( res => {
             console.log(res.data)
-            alert("Predicted character is : "+ res.data.predicted)
+            this.setState({
+              showAlert: true,
+              predicted: res.data.predicted
+            });
             resolve("ok");
           })
           .catch(err => {
@@ -61,8 +79,32 @@ export default class HomeScreen extends Component {
 
 
   render() {
+    const {showAlert} = this.state;
     return (
       <>
+      <AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title={`Predicted Character Is`}
+          message={`${this.state.predicted}`}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Go back"
+          confirmButtonColor="#DD6B55"
+          onCancelPressed={() => {
+            this.hideAlert();
+          }}
+          onConfirmPressed={() => {
+            this.hideAlert();
+          }}
+          titleStyle={{
+            fontSize: 20
+          }}
+          messageStyle={{
+            fontSize: 55
+          }}
+        />
       <StatusBar backgroundColor={'darkslateblue'}  />
       <View style={styles.container}>
         <Header navigation={this.state.navigation} upload={this.upload}/>
