@@ -1,5 +1,5 @@
 from operator import mod
-from flask import Flask
+from flask import Flask, make_response
 import sklearn
 from sklearn.utils import shuffle
 from sklearn.neighbors import KNeighborsClassifier
@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from flask import request
 import urllib.request 
+from filter_image import filter
 
 
 app = Flask(__name__)
@@ -35,12 +36,20 @@ for x in range(len(predicted)):
     print("predicted : ", chars[predicted[x]], " Actual : ", chars[y_test[x]])
 
 predicted = model.predict(x_test[[0]])
-print(predicted, y_test[[0]])
+print((x_test[[0]]), type((x_test[[0]])))
 
-@app.route("/ocr", methods=["GET"])
+@app.route("/ocr", methods=["POST"])
 def index():
-    urllib.request.urlretrieve("https://firebasestorage.googleapis.com/v0/b/confopla.appspot.com/o/21298323.png.png?alt=media&token=f8a13d22-c612-4f91-87b3-cd399136863c", "dsdsds")
-    return "dsds"
+    data = request.get_json()
+    urllib.request.urlretrieve(str(data['url']), "image.png")
+    result = filter()
+    result = result.reshape(1,-1)
+    print(result.shape)
+    predicted = model.predict(result)
+    print("Predicted character is : ", chars[predicted[0]])
+    return make_response({
+        "predicted": str(chars[predicted[0]])
+    })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
