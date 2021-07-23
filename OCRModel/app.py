@@ -1,9 +1,15 @@
 from operator import mod
+from flask import Flask
 import sklearn
 from sklearn.utils import shuffle
 from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import numpy as np
+from flask import request
+import urllib.request 
+
+
+app = Flask(__name__)
 
 data = pd.read_csv('new_data.csv', header=None, sep=",")
 
@@ -27,3 +33,14 @@ chars = {
 
 for x in range(len(predicted)):
     print("predicted : ", chars[predicted[x]], " Actual : ", chars[y_test[x]])
+
+predicted = model.predict(x_test[[0]])
+print(predicted, y_test[[0]])
+
+@app.route("/ocr", methods=["GET"])
+def index():
+    urllib.request.urlretrieve("https://firebasestorage.googleapis.com/v0/b/confopla.appspot.com/o/21298323.png.png?alt=media&token=f8a13d22-c612-4f91-87b3-cd399136863c", "dsdsds")
+    return "dsds"
+
+if __name__ == "__main__":
+    app.run(debug=True)
