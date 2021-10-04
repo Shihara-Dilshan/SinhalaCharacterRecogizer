@@ -1,1 +1,2 @@
 # SinhalaCharacterRecogizer
+MIT License 
